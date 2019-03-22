@@ -1,0 +1,542 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+[v-cloak] {
+	display: none
+}
+
+body,
+html {
+	width: 100%;
+	height: 100%;
+	overflow-y: hidden;
+}
+
+.el-form-item__label:before {
+	content: '* ';
+	color: #ff1818;
+}
+
+a {
+	text-decoration: none;
+}
+
+.table {
+	border-collapse: collapse !important;
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 20px;
+}
+
+.table thead tr {
+	/* border-bottom:1px solid #efefef ; */
+	height: 0px;
+}
+
+.form-control {
+	display: block;
+	width: 50%;
+	height: 20px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.table tbody tr {
+	height: 50px;
+	border-bottom: 1px solid #efefef;
+	color: #999;
+}
+
+#line {
+	width: 0px;
+	border: 2px solid #007AFF;
+	height: 100%;
+	float: left;
+	position: absolute;
+	left: 11%;
+	overflow: hidden;
+	cursor: w-resize;
+	z-index: 999;
+}
+
+.roleCodeMb {
+
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+}
+
+.organCode {
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+}
+
+.table button {
+	padding: 5px 8px !important;
+}
+
+.el-card__body {
+	height: 100%;
+	padding-top: 0px !important;
+
+}
+
+.rolelist {
+	width: 100%;
+	height: 80%;
+	overflow: auto;
+
+}
+
+.roleBox {
+	width: 660px;
+	height: 50%;
+	overflow: auto;
+	position: absolute;
+	left: 50%;
+	top: 25%;
+	margin-left: -330px;
+	background: #ffff;
+
+}
+
+.roleBoxone {
+	width: 50%;
+	height: 50%;
+	overflow: auto;
+	position: absolute;
+	left: 25%;
+	top: 25%;
+	background: #ffff;
+}
+
+.roleOff {
+	width: 30px;
+	position: absolute;
+	top: 24%;
+	left: 50%;
+	margin-left: 370px;
+	cursor: pointer;
+}
+
+.roleOffONE {
+	width: 30px;
+	position: absolute;
+	top: 24%;
+	left: 77%;
+	cursor: pointer;
+}
+
+.organOff {
+	width: 30px;
+	position: absolute;
+	top: 24%;
+	left: 77%;
+	cursor: pointer;
+}
+
+.roleOffONE img {
+	width: 100%;
+}
+
+.roleOff img {
+	width: 100%;
+}
+
+.organOff img {
+	width: 100%;
+}
+
+.BoxNav {
+	float: left;
+	position: absolute;
+	left: 375px;
+}
+
+.fileinput-button {
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+}
+
+.fileinput-button input {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	opacity: 0;
+	-ms-filter: 'alpha(opacity=0)';
+	font-size: 200px;
+}
+
+.TopNav {
+	width: 100%;
+	height: 7%;
+	background: #057cfc;
+	overflow: hidden;
+	min-height: 50px;
+	position: relative;
+}
+
+.logo {
+	float: left;
+	padding-left: 50px;
+	overflow: hidden;
+	height: 50px;
+	position: absolute;
+	top: 50%;
+	margin-top: -25px;
+}
+
+.logo img {
+	width: 50px;
+	float: left;
+}
+
+.logo span {
+	float: left;
+	font-size: 20px;
+	font-weight: 600;
+	color: white;
+	padding: 4% 0;
+
+}
+
+.TopNavLeft {
+	float: right;
+	margin-top: 1.2%;
+}
+
+.TopNavLeft img {
+	width: 20px;
+	float: left;
+	padding-right: 10px;
+}
+
+.TopNavLeft span {
+	float: left;
+	color: white;
+	font-size: 14px;
+}
+
+.uers {
+	float: left;
+	padding-right: 10px;
+}
+
+.time {
+	float: left;
+}
+
+.end {
+	float: left;
+	margin-left: 30px;
+	margin-right: 20px;
+	cursor: pointer;
+}
+
+.leftMain {
+	float: left;
+	width: 11%;
+	height: 100%;
+	/* border-right: 4px solid #057CFC; */
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.el-submenu__title {
+	/* padding: 0 !important;
+	margin-left: 40px !important; */
+	margin-right: 20px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+}
+
+.main {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.tableRight {
+	width: 100%;
+	padding: 10px 0;
+	padding-right: 30px;
+	border-bottom: 1px solid #efefef;
+	overflow: hidden;
+}
+
+.tbaleGN {
+	float: right;
+	margin-right: 18px !important;
+}
+
+.rightMain {
+	float: left;
+	width: 87%;
+	height: 90%;
+	padding: 0 10px;
+	/* padding-top: 25px; */
+	background: #fff;
+}
+
+.box {
+	width: 95%;
+	height: 100%;
+	float: right;
+
+}
+
+.nav {
+	width: 64px;
+	height: 100%;
+	float: left;
+	background: #eee;
+
+}
+
+#leftNav {
+	padding-top: 10px;
+	padding-left: 20px;
+}
+
+
+
+.text {
+	font-size: 14px;
+}
+
+.item {
+	margin-bottom: 18px;
+	margin-top: 18px;
+
+}
+
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	content: "";
+}
+
+.clearfix:after {
+	clear: both
+}
+
+.clearfix span {
+	border-left: 4px solid #057cfc;
+	padding-left: 10px;
+}
+
+.switchList {
+	padding: 0 0 10px 0;
+}
+
+.wjj {
+	text-align: center;
+	width: 100px;
+	overflow: hidden;
+	margin: 20px;
+	float: left;
+
+}
+
+.wjj p {
+	font-size: 14px;
+}
+
+.wjjimg {
+	width: 100%;
+	cursor: pointer;
+	height: 100px;
+	background: url(../img/213125.png) no-repeat center;
+
+}
+
+.znimg {
+	text-align: center;
+	width: 150px;
+	margin: 20px;
+	float: left;
+	list-style: none;
+	height: 100px;
+}
+
+.znimg img {
+	width: 100%;
+	height: 106px;
+}
+
+.znimg p {
+	font-size: 14px;
+}
+
+.imgBox {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: #fff;
+	z-index: 999;
+	overflow-y: auto;
+	display: none;
+}
+
+.returnButt {
+	cursor: pointer;
+}
+
+.wjjInput {
+	width: 90%;
+	text-align: center;
+	display: none;
+}
+
+.a-upload {
+	position: relative;
+	cursor: pointer;
+	overflow: hidden;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1
+}
+
+.a-upload input {
+	position: absolute;
+	font-size: 100px;
+	right: 0;
+	top: 0;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	cursor: pointer
+}
+
+.imgBox_content {
+	/* overflow: hidden; */
+	position: relative;
+}
+
+.img_bj {
+	overflow: hidden;
+	border-bottom: 1px solid #efefef;
+	/* position: fixed; */
+	width: 100%;
+	top: 0px;
+	background: #fff;
+}
+
+.tableWjj {
+	/* overflow: hidden; */
+	/* position: fixed !important; */
+	top: 0px;
+	/* width: 87%; */
+	z-index: 1;
+	background: #fff;
+
+}
+
+.ImgInput {
+	display: none;
+	width: 150px;
+	height: 18px;
+}
+
+.fillBox {
+	position: relative;
+}
+
+.noData {
+	position: absolute;
+	width: 400px;
+	height: 300px;
+	background: url(../img/noWjj.png) no-repeat center;
+	background-size:100%;
+	left: 50%;
+	margin-left: -200px;
+	margin-top: 150px;
+
+
+}
+
+.noData img {
+	width: 400px;
+	height: 40%;
+}
+.imgNoData{
+	position: absolute;
+	width: 400px;
+	height: 300px;
+	background: url(../img/noImg.png) no-repeat center;
+	background-size:100%;
+	left: 50%;
+	margin-left: -280px;
+	margin-top: 150px;
+}
+
+.imgWold {
+	width: 150px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.znimgwjj {
+	text-align: center;
+	width: 100px;
+	margin: 20px;
+	float: left;
+	list-style: none;
+	height: 119px;
+}
+
+.znimgwjj img {
+	width: 100%;
+	height: 80%;
+}
+
+.imgWoldwjj {
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 14px;
+}
+ .loadingBox{
+	position: fixed;
+	width: 100px;
+	height: 100px;
+	margin-left: 30px;
+	left: 50%;
+	top: 50%;
+	margin-top: -120px;
+	
+} 
+.wjtext{
+	overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+}

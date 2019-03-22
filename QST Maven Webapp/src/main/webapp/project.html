@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>千顺通后台人员管理系统</title>
+
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element.js"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Tabullet.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/project.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/project.css" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+		<script type="text/javascript">
+		</script>
+	</head>
+	<body>
+		<div class="main" id="table">
+			<div class="leftMain" id="leftMain" style="overflow-y: auto;height:90%">
+				<div>
+					<el-row class="tac">
+						<el-col :span="24">
+							<el-menu default-active class="el-menu-vertical-demo" @select="handleSelectNav">
+								<el-submenu :index="itme.id" v-for="itme in nav">
+									<template slot="title" v-cloak>{{itme.label}}</template>
+									<el-menu-item :index="itmeCh.id" v-for="itmeCh in itme.children" v-cloak style="">{{itmeCh.label}}</el-menu-item>
+								</el-submenu>
+							</el-menu>
+						</el-col>
+					</el-row>
+				</div>
+			</div>
+			<div id="line" @mousedown="move"></div>
+			<div class="rightMain" id="rightMain">
+				<div class="rightCZ">
+					<div class="CZRight">
+						<el-row :gutter="20">
+							<el-button type="primary" size="small" @click="roleShow">岗位管理</el-button>
+							<el-button type="primary" @click="addGw" size="small">岗位添加人员</el-button>
+							<el-button type="primary" @click="addBz" size="small">班组添加人员</el-button>
+						</el-row>
+					</div>
+					<div class="CZleft">
+						<!-- <el-row :gutter="20">
+							<el-col :span="18">
+								<el-input placeholder="请输入搜索内容" clearable class="input" v-model="seek"></el-input>
+							</el-col>
+							<el-col :span="6">
+								<el-button type="primary" icon="el-icon-search" @click="seekFU">搜索</el-button>
+							</el-col>
+						</el-row> -->
+
+					</div>
+
+				</div>
+				<div class="boxTable" >
+					<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="">
+						<el-table-column type="selection">
+						</el-table-column>
+						<el-table-column prop="sName" label="姓名" show-overflow-tooltip>
+						</el-table-column>
+						<el-table-column prop="sFName" label="项目岗位" show-overflow-tooltip>
+						</el-table-column>
+						<el-table-column prop="fxmbName" label="所属公司" show-overflow-tooltip>
+						</el-table-column>
+						<el-table-column prop="orleIdsONE" label="职位" show-overflow-tooltip>
+						</el-table-column>
+						<el-table-column prop="sLoginName" label="用户名(手机号)" show-overflow-tooltip>
+						</el-table-column>
+						<el-table-column prop="hidePass" label="用户密码" show-overflow-tooltip>
+						</el-table-column>
+						<el-table-column label="操作" width="200">
+							<template slot-scope="scope">
+								<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+							</template>
+						</el-table-column>
+					</el-table>
+					<!-- 班组 -->
+					<div class="roleCodeMb xgMSG">
+						<div class="roleOff" @click="fromOff()">
+							<img src="img/关闭%20(1).png">
+						</div>
+						<el-card class="box-card roleBox">
+							<div slot="header" class="clearfix">
+								<span>班组添加人员——{{ProjectName}}</span>
+							</div>
+							<div class="rolelist" style="padding-top:20px;">
+								<el-form status-icon label-width="100px" class="demo-ruleForm">
+									<el-form-item label="选择班组">
+										<el-select v-model="getTeamStr" placeholder="请选择部门">
+											<el-option v-for="item in teamArry" :key="item.fID" :label="item.fPostName" :value="item.fID">{{item.fPostName}}</el-option>
+										</el-select>
+									</el-form-item>
+									<el-form-item label="施工班长">
+										<el-select v-model="getBzStr" multiple filterable allow-create default-first-option placeholder="请选择职位">
+											<el-option v-for="item in Unpersonnel" :key="item.fID" :label="item.sName" :value="item.fID">
+											</el-option>
+										</el-select>
+									</el-form-item>
+									<el-form-item label="施工人员">
+										<el-select v-model="getSgryStr" multiple filterable allow-create default-first-option placeholder="请选择职位">
+											<el-option v-for="item in Unpersonnel" :key="item.fID" :label="item.sName" :value="item.fID">
+											</el-option>
+										</el-select>
+									</el-form-item>
+									<el-form-item class="tjbox">
+										<el-button type="primary" size="medium" @click="submitForm()">提交</el-button>
+									</el-form-item>
+								</el-form>
+							</div>
+						</el-card>
+					</div>
+					<!-- 岗位 -->
+				<div class="roleCodeMb addMSG">
+					<div class="roleOff" @click="fromOffNew" >
+						<img src="img/关闭%20(1).png">
+					</div>
+					<el-card class="box-card roleBox">
+						<div slot="header" class="clearfix">
+							<span>岗位添加人员——{{ProjectName}}</span>
+						</div>
+						<div class="rolelist" style="padding-top:20px;">
+							<el-form status-icon label-width="100px" class="demo-ruleForm">
+								<el-form-item label="选择岗位">
+									<el-select v-model="getPostStr" placeholder="请选择部门">
+										<el-option v-for="item in postArry" :label="item.fPostName" :value="item.fID">{{item.fPostName}}</el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="选择人员">
+									<el-select v-model="setAddPositionArry" multiple filterable allow-create default-first-option placeholder="请选择职位">
+										<el-option v-for="item in Unpersonnel" :key="item.fID" :label="item.sName" :value="item.fID">
+										</el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item class="tjbox">
+									<el-button type="primary" size="medium" @click="addBmitForm">提交</el-button>
+								</el-form-item>
+							</el-form>
+						</div>
+					</el-card>
+				</div>
+
+				<div class="roleCode roleCodeMb">
+					<div class="roleOffONE" @click="roleOff">
+						<img src="img/关闭%20(1).png">
+					</div>
+					<el-card class="box-card roleBoxone">
+						<div slot="header" class="clearfix">
+							<span>岗位管理——{{ProjectName}}</span>
+						</div>
+						<div class="rolelist">
+							<el-row style="padding-left: 50px;margin: 15px 0;">
+								<el-col :span="24">
+									<el-radio v-model="radio" label="岗位">创建岗位</el-radio>
+									<el-radio v-model="radio" label="班组">创建班组</el-radio>
+								</el-col>
+							</el-row>
+							<table class="table table-hover" id="tableone">
+								<thead>
+									<tr data-tabullet-map="fID">
+										<th width="50" data-tabullet-map="_index" data-tabullet-readonly="true"></th>
+										<th data-tabullet-map="fPostName"></th>
+										<th width="50" data-tabullet-type="edit"></th>
+										<th width="50" data-tabullet-type="delete"></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</el-card>
+				</div>
+
+				<!-- 组织 -->
+				<!--  <div class="organCode">
+					<div class="organOff" @click="organOff">
+						<img src="img/关闭%20(1).png">
+					</div>
+					<el-card class="box-card roleBox">
+						<div slot="header" class="clearfix">
+							<span>部门管理-{{organfindArry}}</span>
+						</div>
+						<div class="rolelist">	
+							<table class="table table-hover" id="tableorgan">
+								<thead>
+									<tr data-tabullet-map="id">
+										<th width="50" data-tabullet-map="_index" data-tabullet-readonly="true"></th>
+										<th data-tabullet-map="label"></th>
+										<th width="50" data-tabullet-type="edit"></th>
+										<th width="50" data-tabullet-type="delete"></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</el-card>
+				</div> -->
+			</div>
+		</div>
+		</div>
+	</body>
+
+</html>

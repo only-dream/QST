@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>千顺通后台人员管理系统</title>
+
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element.js"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<script src="js/Tabullet.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/projectManagement.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" type="text/css" href="css/projectManagement.css" />
+	</head>
+	<body>
+		<div class="main" id="table">
+			<div class="leftMain" id="leftMain" style="overflow-y: auto;height:90%">
+				<div>
+					<el-row class="tac">
+						<el-col :span="24">
+							<el-menu default-active class="el-menu-vertical-demo" @select="handleSelectNav">
+								<el-submenu :index="itme.id" v-for="itme in nav">
+									<template slot="title" v-cloak>{{itme.label}}</template>
+									<el-menu-item :index="itmeCh.id" v-for="itmeCh in itme.children" v-cloak>{{itmeCh.label}}</el-menu-item>
+								</el-submenu>
+							</el-menu>
+						</el-col>
+					</el-row>
+				</div>
+			</div>
+			<div id="line" @mousedown="move"></div>
+			<div class="rightMain" id="rightMain">
+				<div class="rightCZ">
+					<div class="CZRight">
+						<el-row :gutter="20">
+							<el-button type="primary" @click="addMSGWJJ" size="small">新增项目</el-button>
+							<el-button type="primary" size="small" @click="delProject()">删除项目</el-button>
+						</el-row>
+					</div>
+				</div>
+				<div class="boxTable">
+					<el-card class="box-card cardbox">
+						<div slot="header" class="clearfix">
+							<span>项目信息</span>
+							<el-button style="float: right; padding: 3px 0" type="text" @click="MsgEdit()" v-show="!inputShow">编辑</el-button>
+							<el-button style="float: right; padding: 3px 0" @click="MsgPreservation()" type="text" v-show="inputShow">保存</el-button>
+						</div>
+						<div class="text item" style="padding-top:20px;">
+							<el-form ref="form" label-width="100px">
+								<el-form-item label="项目名称:">
+									<el-input placeholder="请输入项目名称" v-model="projectMsg.fProjectQuanName" v-show="inputShow"></el-input>
+									<span v-show="!inputShow" v-cloak>{{projectMsg.fProjectQuanName}}</span>
+								</el-form-item>
+								<el-form-item label="项目简称:">
+									<el-input placeholder="请输入项目简称" v-model="projectMsg.fPrjoectName" v-show="inputShow"></el-input>
+									<span v-show="!inputShow" v-cloak>{{projectMsg.fPrjoectName}}</span>
+								</el-form-item>
+								<el-form-item label="开始时间:">
+									<el-col :span="11">
+										<el-date-picker type="date" placeholder="选择项目开始时间" value-format="yyyy-MM-dd" v-model="fStateTime" style="width: 100%;"
+										 v-show="inputShow"></el-date-picker>
+										<span v-show="!inputShow" v-cloak>{{fStateTime}}</span>
+									</el-col>
+								</el-form-item>
+								<el-form-item label="竣工时间:">
+									<el-col :span="11">
+										<el-date-picker type="date" placeholder="选择项目竣工时间" value-format="yyyy-MM-dd" v-model="fEndTime" style="width: 100%;"
+										 v-show="inputShow"></el-date-picker>
+										<span v-show="!inputShow" v-cloak>{{fEndTime}}</span>
+									</el-col>
+								</el-form-item>
+								<el-form-item label="项目地点:">
+									<el-input placeholder="请输入项目地点" v-model="projectMsg.fProjectAddress" v-show="inputShow"></el-input>
+									<span v-show="!inputShow" v-cloak>{{projectMsg.fProjectAddress}}</span>
+								</el-form-item>
+								<el-form-item label="项目信息:">
+									<el-input type="textarea" placeholder="请输入项目信息" v-model="projectMsg.fProjectMessage" v-show="inputShow"></el-input>
+									<span v-show="!inputShow" v-cloak>{{projectMsg.fProjectMessage}}</span>
+								</el-form-item>
+							</el-form>
+						</div>
+					</el-card>
+					<el-card class="box-card cardbox">
+						<div slot="header" class="clearfix">
+							<span>项目区段信息</span>
+							<el-button style="float: right; padding: 3px 0" type="text" @click="addQD">新增区段</el-button>
+						</div>
+						<div class="text item">
+							<el-table :data="sectionMsgArry" style="width: 100%">
+								<el-table-column type="expand">
+									<template slot-scope="props">
+										<div class="qdmsgbox">
+											<div class="qdmsgHeader">
+												<ul>
+													<li>桩号</li>
+													<li>方量/M3</li>
+													<li>吨位/T</li>
+													<li>档距/KM</li>
+													<li>操作</li>
+												</ul>
+											</div>
+											<div class="qdmsgContent">
+												<ul v-for="itme in props.row.children">
+													<li>
+														<span v-show="!qdmsShow" v-cloak>{{ itme.fPostName }}</span>
+														<!-- <el-input v-model="itme.fPostName" v-show="qdmsShow"></el-input> -->
+														<el-input v-model="itme.fPostName"class="zhinput" style="display: none;"></el-input>
+													</li>
+													<li>
+														<span v-show="!qdmsShow" v-cloak>{{ itme.fCubeSum }}</span>
+														<!-- <el-input v-model="itme.fCubeSum" v-show="qdmsShow"></el-input> -->
+														<el-input v-model="itme.fCubeSum" class="zhinput" style="display: none;"></el-input>
+
+													</li>
+													<li>
+														<span v-show="!qdmsShow" v-cloak>{{ itme.fTonnageSum }}</span>
+														<!-- <el-input v-model="itme.fTonnageSum" v-show="qdmsShow"></el-input> -->
+														<el-input v-model="itme.fTonnageSum" class="zhinput" style="display: none;"></el-input>
+
+													</li>
+													<li>
+														<span v-show="!qdmsShow" v-cloak>{{ itme.fSpanSum }}</span>
+														<!-- <el-input v-model="itme.fSpanSum" v-show="qdmsShow"></el-input> -->
+														<el-input v-model="itme.fSpanSum" class="zhinput" style="display: none;"></el-input>
+
+													</li>
+													<li>
+														<el-row style="text-align:center;">
+															<el-col :span="12" >
+																<el-button type="text"class="zhbj" id = "zhbj" @click="PileEditors($event)" style="padding: 0px;" size="small">编辑</el-button>
+																<el-button type="text" @click="PileSave(itme.fID,itme.fMsterID,itme.fProjectCode,itme.fPostName,itme.fCubeSum,itme.fTonnageSum,itme.fSpanSum )"
+																class="save" id="save" size="small">保存</el-button>
+															</el-col>
+															<el-col :span="12">
+																<el-button type="text" @click="delZH(itme.fID,itme.fMsterID,itme.fProjectCode)" size="small">删除</el-button>
+															</el-col>
+														</el-row>
+														
+													</li>
+												</ul>
+											</div>
+										</div>
+									</template>
+								</el-table-column>
+								<el-table-column label="区段名称" prop="fPostName">
+								</el-table-column>
+								<el-table-column label="开始桩号" prop="fPostNameState">
+								</el-table-column>
+								<el-table-column label="结束桩号" prop="fPostNameEnd">
+								</el-table-column>
+								<el-table-column label="总档距" prop="fSpanSum">
+								</el-table-column>
+								<el-table-column label="编辑" width="250px">
+									<template slot-scope="scope">
+										<el-row style="text-align:center;">
+											<el-col :span="6">
+												<el-button size="mini" @click="SectionEditors(scope.$index, scope.row)">编辑</el-button>
+
+											</el-col>
+											<el-col :span="12">
+												<el-button size="mini" @click="addPile(scope.$index, scope.row)">新增桩号</el-button>
+
+											</el-col>
+											<el-col :span="6">
+												<el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+
+											</el-col>
+										</el-row>
+									</template>
+								</el-table-column>
+							</el-table>
+						</div>
+					</el-card>
+					<el-card class="box-card cardbox">
+						<div slot="header" class="clearfix">
+							<span>项目工序信息</span>
+						</div>
+						<div class="text item">
+							<div class="gxmsgbox">
+								<div class="gxmsgHeader">
+									<ul>
+										<li>基础</li>
+										<li>组塔</li>
+										<li>架线</li>
+									</ul>
+								</div>
+								<div class="clear"></div>
+								<div class="gxmsgContent">
+									<ul>
+										<li v-for="itme in jc" v-cloak><span>{{itme.lable}}</span></li>
+									</ul>
+									<ul>
+										<li v-for="itme in zt" v-cloak><span>{{itme.lable}}</span></li>
+									</ul>
+									<ul>
+										<li v-for="itme in jx" v-cloak><span>{{itme.lable}}</span></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</el-card>
+				</div>
+			</div>
+			<div class="roleCodeMb addMSGWJJ">
+				<div class="roleOff" @click="fromOffNewWJJ ">
+					<img src="img/关闭%20(1).png">
+				</div>
+				<el-card class="box-card roleBox">
+					<div slot="header" class="clearfix">
+						<span>新建项目</span>
+						<el-button style="float: right; padding: 3px 0" @click="addProject()" type="text">提交</el-button>
+					</div>
+					<div class="rolelist" style="padding-top:20px;">
+						<el-form ref="form" label-width="100px">
+							<el-form-item label="项目名称:">
+								<el-input placeholder="请输入项目名称" v-model="projectMsg.name"></el-input>
+							</el-form-item>
+							<el-form-item label="项目简称:">
+								<el-input placeholder="请输入项目简称" v-model="projectMsg.jcName"></el-input>
+							</el-form-item>
+							<el-form-item label="开始时间:">
+								<el-col :span="11">
+									<el-date-picker type="date" placeholder="选择项目开始时间" value-format="yyyy-MM-dd" v-model="projectMsg.startTime"
+									 style="width: 100%;"></el-date-picker>
+								</el-col>
+							</el-form-item>
+							<el-form-item label="竣工时间:">
+								<el-col :span="11">
+									<el-date-picker type="date" placeholder="选择项目竣工时间" value-format="yyyy-MM-dd" v-model="projectMsg.endTime"
+									 style="width: 100%;"></el-date-picker>
+								</el-col>
+							</el-form-item>
+							<el-form-item label="项目地点:">
+								<el-input placeholder="请输入项目地点" v-model="projectMsg.address"></el-input>
+							</el-form-item>
+							<el-form-item label="项目信息:">
+								<el-input type="textarea" placeholder="请输入项目信息" v-model="projectMsg.proMeg"></el-input>
+							</el-form-item>
+						</el-form>
+					</div>
+				</el-card>
+			</div>
+			<!--区段编辑信息-->
+			<div class="roleCodeMb  addMSGEditors">
+				<div class="roleOff" @click="fromOffNewEditors">
+					<img src="img/关闭%20(1).png">
+				</div>
+				<el-card class="box-card roleBox">
+					<div slot="header" class="clearfix">
+						<span>区段编辑</span>
+						<el-button style="float: right; padding: 3px 0" type="text" @click="SectionUP">提交</el-button>
+					</div>
+					<div class="rolelist" style="padding-top:20px;">
+						<el-form ref="form" label-width="100px">
+							<el-form-item label="区段名称:">
+								<el-input placeholder="请输入区段名称" v-model="MsgPostName"></el-input>
+							</el-form-item>
+							<el-form-item label="开始桩号:">
+								<el-input placeholder="请输入开始桩号" v-model="MsgPostNameState"></el-input>
+							</el-form-item>
+							<el-form-item label="结束桩号:">
+								<el-input placeholder="请输入结束桩号" v-model="MsgPostNameEnd"></el-input>
+							</el-form-item>
+						</el-form>
+					</div>
+				</el-card>
+			</div>
+			<!--新增桩号信息-->
+			<div class="roleCodeMb  addMzh">
+				<div class="roleOff" @click="fromOffNewzh">
+					<img src="img/关闭%20(1).png">
+				</div>
+				<el-card class="box-card roleBox">
+					<div slot="header" class="clearfix">
+						<span>新增桩号</span>
+						<el-button style="float: right; padding: 3px 0" type="text" @click="addPileUP">提交</el-button>
+					</div>
+					<div class="rolelist" style="padding-top:20px;">
+						<el-form ref="form" label-width="100px">
+							<el-form-item label="桩号:">
+								<el-input placeholder="请输入桩号" v-model="zhfPostName"></el-input>
+							</el-form-item>
+							<el-form-item label="方量/M3:">
+								<el-input placeholder="请输入方量/M3" v-model="zhfCubeSum"></el-input>
+							</el-form-item>
+							<el-form-item label="吨位/T:">
+								<el-input placeholder="请输入吨位/T" v-model="zhfTonnageSum"></el-input>
+							</el-form-item>
+							<el-form-item label="档距/KM:">
+								<el-input placeholder="请输入档距/KM" v-model="zhfSpanSum"></el-input>
+							</el-form-item>
+						</el-form>
+					</div>
+				</el-card>
+			</div>
+			<!--新增区段信息-->
+			<div class="roleCodeMb  addMQd">
+				<div class="roleOff" @click="fromOffNewQd">
+					<img src="img/关闭%20(1).png">
+				</div>
+				<el-card class="box-card roleBox">
+					<div slot="header" class="clearfix">
+						<span>新增区段</span>
+						<el-button style="float: right; padding: 3px 0" type="text" @click="addQdUP">提交</el-button>
+					</div>
+					<div class="rolelist" style="padding-top:20px;">
+						<el-form ref="form" label-width="100px">
+							<el-form-item label="区段名称:">
+								<el-input placeholder="请输入区段名称" v-model="qdfPostName"></el-input>
+							</el-form-item>
+							<el-form-item label="开始桩号:">
+								<el-input placeholder="请输入开始桩号" v-model="qdfPostNameState"></el-input>
+							</el-form-item>
+							<el-form-item label="结束桩号:">
+								<el-input placeholder="请输入结束桩号" v-model="qdfPostNameEnd"></el-input>
+							</el-form-item>
+						</el-form>
+					</div>
+				</el-card>
+			</div>
+		</div>
+	</body>
+
+</html>

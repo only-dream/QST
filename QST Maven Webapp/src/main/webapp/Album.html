@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>千顺通后台人员管理系统</title>
+
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element.js"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Tabullet.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/viewer.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/ajax.js" charset="utf-8"></script>
+		<script src="js/Album.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/viewer.css" />
+		<link rel="stylesheet" type="text/css" href="css/Album.css" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" type="text/css" href="css/loading.css" />
+	</head>
+	<body>
+		<div class="main" id="table">
+			<div class="leftMain" id="leftMain" style="overflow-y: auto;height:90%">
+				<div>
+					<el-row class="tac">
+						<el-col :span="24">
+							<el-tree :data="nav" :props="defaultProps" accordion @node-click="handleSelectNav">
+								<span class="custom-tree-node" slot-scope="{ node, data }">
+									<span style="font-size: 14px;" v-cloak>
+										{{ node.label }}
+										<el-tag size="mini" style="margin-left: 20px;" v-cloak>{{data.number}}张</el-tag>
+									</span>
+								</span>
+							</el-tree>
+						</el-col>
+					</el-row>
+				</div>
+			</div>
+			<div id="line" @mousedown="move"></div>
+			<div class="rightMain" id="rightMain" style="overflow: auto;">
+				<div class="loadingBox">
+					 <div class="load-container load4" v-show="loading">
+					 	<div class="loader">Loading...</div>
+					 </div>
+				</div>
+				<el-row :gutter="10" style="border-bottom:1px solid #efefef;" class="tableWjj">
+					<el-col :span="8">
+						<el-button type="text" @click="addWjj()" v-show="listShow">新建文件夹</el-button>
+						<el-button type="text" v-show="listShow" @click="delWjj()">删除文件夹</el-button>
+						<el-button type="text" @click="addMSGWJJ()" v-show="listShow">上传图片</el-button>
+						<el-button type="text" @click="downloadImg()">下载图片</el-button>
+					</el-col>
+					<el-col :span="8">&nbsp</el-col>
+					<el-col :span="8" style="text-align: right;">
+						<el-col :span="5">
+							<el-button type="text"></el-button>
+						</el-col>
+						<el-col :span="5">
+							<el-button type="text"></el-button>
+						</el-col>
+						<el-col :span="6">
+							<el-button type="text" v-cloak>项目名称：{{projectName}}</el-button>
+						</el-col>
+						<el-col :span="8">
+							<el-button type="text">
+								<el-dropdown style="float: right;font-size: 14px;color: #409EFF;" @command="handleCommand">
+									<span class="el-dropdown-link">
+										切换项目<i class="el-icon-arrow-down el-icon--right"></i>
+									</span>
+									<el-dropdown-menu slot="dropdown">
+										<el-dropdown-item v-for="itme in ProjectArry" :command="itme.id" v-cloak>{{itme.label}}</el-dropdown-item>
+									</el-dropdown-menu>
+								</el-dropdown>
+							</el-button>
+						</el-col>
+					</el-col>
+				</el-row>
+				<div class="fillBox" id="images2">
+					<ul>
+						<li class="wjj" v-for="itme in ab" :title="itme.fPostName">
+							<div class="wjjimg" @dblclick="wjjClick($event,itme.fID,itme)" @click="SelectWjj($event,itme.fID,itme.fPostName,itme.fPostID)">
+								<!-- <img src="img/213125.png"> -->
+							</div>
+							<input type="text" name="" class="wjjInput" @blur="wjjInput($event,itme.fID,itme.fPostName,itme.fPostID)" v-model="wjjName" />
+							<p @dblclick="wjjRename($event,itme.fID,itme.fProjectCode,itme.fPostName)" @click="wjjnoInput($event)" class="wjtext" :title="itme.fPostName" v-cloak>{{itme.fPostName}}</p>
+						</li>
+					</ul>
+					<ul>
+						<li class="znimgwjj" v-for="time in wjjImg" @mouseenter="wjjImgEnter" @mouseleave="wjjImgLeave">
+							<img :data-imgurl="time.img_url" :src="time.img_url" :title="time.img_name" />
+							<p class="imgWoldwjj" v-cloak>{{time.img_name}}</p>
+							<input type="text" @blur="imgInput($event,time.id,time.img_name,time.img_url,2)" v-model="imgName" class="ImgInput"
+							 style="width: 120px;" />
+							<div class="bjxx" v-show="editWjj">
+								<el-col :span="8">
+									<el-button type="text" @click="imgRename($event,time.img_name)">重命名</el-button>
+								</el-col>
+								<el-col :span="8">&nbsp</el-col>
+								<el-col :span="8">
+									<el-button type="text" @click="delImg(time.id,time.img_url,2)">删除</el-button>
+								</el-col>
+							</div>
+						</li>
+					</ul>
+					<div class="noData" v-show="wjjShow">
+						<img src="img/noWjj.png" style="display: none;">
+					</div>
+				</div>
+				<div class="imgBox">
+					<div class="img_bj">
+						<el-col :span="8">
+							<el-button type="text" @click="returnBUtt">返回目录</el-button>
+							<el-button type="text" @click="addMSG()">上传图片</el-button>
+							<el-button type="text" @click="downloadImg()">下载图片</el-button>
+							<el-button type="text" @click="editButt">{{edit}}</el-button>
+						</el-col>
+						<el-col :span="8">&nbsp</el-col>
+						<el-col :span="8">
+
+						</el-col>
+					</div>
+					<div class="imgBox_content">
+						<ul id="images1">
+							<li class="znimg" v-for="time in imgBOX">
+								<img  :src="time.img_url" :title="time.img_name" />
+								<p class="imgWold" v-cloak>{{time.img_name}}</p>
+								<input type="text" @blur="imgInput($event,time.id,time.img_name,time.img_url,1)" v-model="imgName" class="ImgInput" />
+								<div class="bjxx" v-show="editState">
+									<el-col :span="8">
+										<el-button type="text" @click="imgRename($event,time.img_name)">重命名</el-button>
+									</el-col>
+									<el-col :span="8">&nbsp</el-col>
+									<el-col :span="8">
+										<el-button type="text" @click="delImg(time.id,time.img_url,1)">删除</el-button>
+									</el-col>
+								</div>
+							</li>
+						</ul>
+						<div class="imgNoData" v-show="imgShow">
+							<!-- <img src="img/noImg.png"> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--文件夹中上传-->
+			<div class="roleCodeMb addMSG">
+				<div class="roleOff" @click="fromOffNew">
+					<img src="img/关闭%20(1).png">
+				</div>
+				<el-card class="box-card roleBox">
+					<div slot="header" class="clearfix">
+						<span>上传图片</span>
+					</div>
+					<div class="rolelist" style="padding-top:20px;">
+						<el-form status-icon label-width="100px" class="demo-ruleForm">
+							<el-form-item label="施工桩号">
+								<el-input v-model="imgZh"></el-input>
+							</el-form-item>
+							<el-form-item label="施工部位">
+								<el-input placeholder="请输入施工部位" v-model="imgSgbw"></el-input>
+							</el-form-item>
+							<el-form-item label="施工要求">
+								<span>{{imgPsyq}}</span>
+							</el-form-item>
+							<el-form-item label="命名规则">
+								<span>{{imgMmgz}}</span>
+							</el-form-item>
+							<el-form-item label="照片名称">
+								<p><span>{{imgMcqj}}</span></p>
+								<el-input v-model="imgXpmc"></el-input>
+							</el-form-item>
+							<el-form-item label="日期选择">
+								<el-date-picker v-model="imgDate" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期">
+								</el-date-picker>
+							</el-form-item>
+							<el-form-item label="上传图片">
+								<el-button type="primary" size="mini" class="a-upload">
+									<input @change="uploadPhoto($event)" type="file" class="kyc-passin" />上传
+									<i class="el-icon-upload el-icon--right"></i>
+								</el-button>
+							</el-form-item>
+							<el-form-item>
+								<el-button type="primary" size="medium" @click="upData">
+									提交
+								</el-button>
+							</el-form-item>
+						</el-form>
+					</div>
+				</el-card>
+			</div>
+			<!--文件夹外上传图片-->
+			<div class="roleCodeMb addMSGWJJ">
+				<div class="roleOff" @click="fromOffNewWJJ">
+					<img src="img/关闭%20(1).png">
+				</div>
+				<el-card class="box-card roleBox">
+					<div slot="header" class="clearfix">
+						<span>上传图片</span>
+					</div>
+					<div class="rolelist" style="padding-top:20px;">
+						<el-form status-icon label-width="100px" class="demo-ruleForm">
+							<el-form-item label="施工桩号">
+								<el-input v-model="imgZh"></el-input>
+							</el-form-item>
+							<el-form-item label="施工部位">
+								<el-input placeholder="请输入施工部位" v-model="imgSgbw"></el-input>
+							</el-form-item>
+							<el-form-item label="施工要求">
+								<span>{{imgPsyq}}</span>
+							</el-form-item>
+							<el-form-item label="命名规则">
+								<span>{{imgMmgz}}</span>
+							</el-form-item>
+							<el-form-item label="照片名称">
+								<p><span>{{imgMcqj}}</span></p>
+								<el-input v-model="imgXpmc"></el-input>
+							</el-form-item>
+							<el-form-item label="日期选择">
+								<el-date-picker v-model="imgDate" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期">
+								</el-date-picker>
+							</el-form-item>
+							<el-form-item label="上传图片">
+								<el-button type="primary" size="mini" class="a-upload">
+									<input @change="uploadPhoto($event)" type="file" class="kyc-passin" />上传
+									<i class="el-icon-upload el-icon--right"></i>
+								</el-button>
+							</el-form-item>
+							<el-form-item>
+								<el-button type="primary" size="medium" @click="upDataWJJ">
+									提交
+								</el-button>
+							</el-form-item>
+						</el-form>
+					</div>
+				</el-card>
+			</div>
+		</div>
+	</body>
+
+</html>

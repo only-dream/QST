@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>千顺通后台人员管理系统</title>
+
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element.js"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<script src="js/SignIn.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/SignIn.css" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script> -->
+	</head>
+	<body>
+		<div class="main" id="table">
+			<div class="rightCZ">
+				<div class="CZRight">
+				</div>
+				<div class="CZleft">
+					<el-row :gutter="20">
+						<el-col :span="18">
+							<el-input placeholder="请输入搜索内容" clearable class="input"></el-input>
+						</el-col>
+						<el-col :span="6">
+							<el-button type="primary" icon="el-icon-search">搜索</el-button>
+						</el-col>
+					</el-row>
+				</div>
+
+			</div>
+			<div class="boxTable">
+				<el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
+
+					<el-tab-pane label="考勤日报" name="first" style="padding-left:20px ;">
+						<el-row :gutter="20" style="border-bottom:1px solid #efefef; padding-bottom: 20px;">
+							<el-col :span="24">
+								<el-date-picker v-model="DayValue" type="daterange"  format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
+								</el-date-picker>
+								<el-button type="success" size="mini" @click="QueryDayForm">查询</el-button>
+								<el-button type="success" size="mini" @click="getDayForm">导出报表</el-button>
+							</el-col>
+						</el-row>
+						<el-table style="width: 100%" :data="tableData">
+							<el-table-column prop="fName" label="姓名">
+							</el-table-column>
+							<el-table-column prop="fSignDate" label="签到日期">
+							</el-table-column>
+							<el-table-column prop="fProjectName" label="项目名称">
+							</el-table-column>
+							<el-table-column prop="fStartSignTime" label="签到时间">
+							</el-table-column>
+							<el-table-column prop="fEndSignTime" label="签退时间">
+							</el-table-column>
+							<el-table-column prop="fWeek" label="星期">
+							</el-table-column>
+						</el-table>
+					</el-tab-pane>
+					<el-tab-pane label="考勤月报" name="second" style="padding-left:20px ;">
+						<el-row :gutter="20" style="border-bottom:1px solid #efefef; padding-bottom: 20px;">
+							<el-col :span="24">
+								<el-date-picker v-model="monthDate" type="month" placeholder="选择月" format="yyyy-MM" value-format="yyyy-MM"></el-date-picker>
+								 <el-button type="success" size="mini" @click="getMonth">查询</el-button>
+								 <el-button type="success" size="mini" @click="exportMonth">导出月报表</el-button>
+							</el-col>
+						</el-row>
+						
+						<el-table style="width: 100%" :data="tableData" style="padding-left:20px ;">
+							<el-table-column prop="fName.value" label="姓名">
+							</el-table-column>
+							<el-table-column prop="fRoleName.value" label="职位">
+							</el-table-column>
+							<el-table-column prop="count.value" label="打卡总数">
+							</el-table-column>
+							<el-table-column prop="fMorningNormal.value" label="正常签到">
+							</el-table-column>
+							<el-table-column prop="fEveningNormal.value" label="正常签退">
+							</el-table-column>
+							<el-table-column prop="fLate.value" label="迟到">
+							</el-table-column>
+							<el-table-column prop="fLeaveEarly.value" label="早退">
+							</el-table-column>
+							<el-table-column prop="fNoSign.value" label="缺卡">
+							</el-table-column>
+						</el-table>
+
+					</el-tab-pane>
+					<el-tab-pane label="班组考勤" name="third" style="padding-left: 20px;">
+						<el-row :gutter="20" style="border-bottom:1px solid #efefef; padding-bottom: 20px;">
+							<el-col :span="24" >
+								<el-date-picker v-model="AllValue" type="daterange"  format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期">
+								</el-date-picker>
+								<el-button type="success" size="mini" @click="QueryAllForm">查询</el-button>
+								<el-button type="success" size="mini" @click="getTeamForm">导出考勤报表</el-button>
+							</el-col>
+						</el-row>
+						<el-table style="width: 100%" :data="tableData" >
+							<el-table-column prop="fName.value" label="班组">
+							</el-table-column>
+							<el-table-column prop="fRoleName.value" label="职位">
+							</el-table-column>
+							<el-table-column prop="count.value" label="打卡总数">
+							</el-table-column>
+							<el-table-column prop="fMorningNormal.value" label="正常签到">
+							</el-table-column>
+							<el-table-column prop="fEveningNormal.value" label="正常签退">
+							</el-table-column>
+							<el-table-column prop="fLate.value" label="迟到">
+							</el-table-column>
+							<el-table-column prop="fLeaveEarly.value" label="早退">
+							</el-table-column>
+							<el-table-column prop="fNoSign.value" label="缺卡">
+						</el-table>
+					</el-tab-pane>
+				</el-tabs>
+
+			</div>
+		</div>
+	</body>
+
+</html>

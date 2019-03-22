@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Ernest.Dao.saOproleDaoI">
+	<resultMap id="saOproleMap" type="Ernest.Entity.saOprole">
+        <id column="Sid" jdbcType="VARCHAR" property="sid" />
+        <result column="Sname" jdbcType="VARCHAR" property="sname" />
+        <result column="SroleKind" jdbcType="VARCHAR" property="sroleKind" />
+        <result column="Smd5str" jdbcType="VARCHAR" property="smd5str" />
+        <result column="Smd5str2" jdbcType="VARCHAR" property="smd5str2" />
+        <result column="Smd5str3" jdbcType="VARCHAR" property="smd5str3" />
+        <result column="SparentRolesNames" jdbcType="VARCHAR" property="sparentRolesNames" />
+        <result column="Sdescription" jdbcType="VARCHAR" property="sdescription" />
+        <result column="ScreateTime" jdbcType="TIMESTAMP" property="screateTime" />
+        <collection property="saOppersonOprole" ofType="Ernest.Entity.SaOppersonOprole">
+        		<id column="soo_id" jdbcType="VARCHAR" property="sid"/>
+			<result column="userId" jdbcType="VARCHAR" property="userId"/>
+			<result column="roleId" jdbcType="VARCHAR" property="roleId"/>
+        	<collection property="saOporg" ofType="Ernest.Entity.SaOporg">
+        		<id column="so_id" jdbcType="VARCHAR" property="sid"/>
+				<result column="snodeKind" jdbcType="VARCHAR" property="snodeKind" />
+				<result column="sparentId" jdbcType="VARCHAR" property="sparentId" />
+				<result column="sParentID2" jdbcType="VARCHAR" property="sparentId2" />
+        	</collection>
+        </collection>
+    </resultMap>
+    
+	<sql id="Bese_Comuln_List">
+		Sid,Sname,Smd5str,ScreateTime 
+	</sql>
+	
+	<select id="findBySaOproleId" parameterType="String" resultMap="saOproleMap">
+		select 
+		<include refid="Bese_Comuln_List"/>
+		from sa_oprole 
+		where Sid = #{sid,jdbcType=VARCHAR} 
+		
+	</select>
+	
+	<select id="findAllBySaOproleSmd5str" parameterType="String" resultMap="saOproleMap">
+		select 
+		<include refid="Bese_Comuln_List"/>
+		from sa_oprole 
+		where Smd5str = #{smd5str,jdbcType=VARCHAR}
+		
+	</select>
+	
+	<insert id="save" parameterType="Ernest.Entity.saOprole">
+		 insert into sa_oprole
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sid != null">
+            Sid,
+            </if>
+            <if test="sname != null">
+            Sname,
+            </if>
+            <if test="smd5str != null">
+            Smd5str,
+            </if>
+            <if test="screateTime != null">
+            ScreateTime 
+            </if>
+           </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="sid != null">
+         #{sid,jdbcType=VARCHAR},
+         </if>
+         <if test="sname != null">
+         #{sname,jdbcType=VARCHAR},
+         
+         </if>
+         <if test="smd5str != null">
+         #{smd5str,jdbcType=VARCHAR},
+         
+         </if>
+         <if test="screateTime != null">
+         #{screateTime,jdbcType=TIMESTAMP},
+         
+         </if>
+        </trim>
+	</insert>
+	
+	<update id="update" parameterType="Ernest.Entity.saOprole">
+		update sa_oprole 
+			<trim prefix="set" suffixOverrides=",">
+				<if test="sname != null">
+					sname = #{sname,jdbcType=VARCHAR},
+				</if>
+				<if test="smd5ste !=null">
+					smd5str = #{smd5str,jdbcType=VARCHAR},
+				</if>
+				<if test="screateTime !=null">
+					screateTime = #{screateTime,jdbcType=TIMESTAMP},
+				</if>
+			</trim>
+		where 
+			sid =  #{sid,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="findJob" parameterType="String" resultMap="saOproleMap">
+		select 
+			sa.sID as Sid,
+			sa.sName as Sname 
+		from 
+			sa_oprole sa,sa_opperson_oprole so 
+		where  
+			sa.sID=so.roleID and so.userID=#{id}
+	</select>
+	
+	<select id="findgroup" parameterType="String" resultMap="saOproleMap">
+		select 
+			sa.sID as Sid,
+			sa.sName as Sname
+		from 
+			sa_oprole sa,sa_opperson_oprole so,sa_oporg sop 
+		where  
+			sa.sID=so.roleID and so.userID=sop.sParentID2 and sop.sID=#{id}
+	</select>
+</mapper>

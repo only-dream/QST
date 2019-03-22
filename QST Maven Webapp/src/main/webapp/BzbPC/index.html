@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>PC可视化平台</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/animate.min.css"/>
+		<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="js/ie.js"></script>
+		<script type="text/javascript" src="js/swiper-3.4.2.min.js"></script>
+		<script type="text/javascript" src="js/echarts.min.js"></script>
+		<script src="js/echarts.js" charset="UTF-8"></script>
+		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+        
+	</head>
+
+	<body>
+		<div class="boxContent" >
+			<div  class="pmButt" style="display: none;">
+				<span  class="qpButt qp" onclick="requestFullScreen(document.documentElement)">全屏</span>
+				<span  class="qpButt tc" onclick="exitFull()"  style="display: none;">退出</span>
+			</div>
+			<div class="tcLOGIN">
+				<img src="img/offImg.png"/ style="float:left;width:18px;padding-right: 10px;"><span style="float:left;">退出登录</span>
+			</div>
+			<div class="left">
+				<!--
+                	作者：offline
+                	时间：2018-08-21
+                	描述：左边模块1
+                -->
+				<div class="left-gcyl backImg">
+					<div class="Hear Hear_1" ><span class="animated fadeInUp" style="display:block;">工程预览</span></div>
+					<div class="gcMsg">
+						<div class="gcMsgHear"><span class="animated bounceInLeft">暂无数据</span></div>
+						<div class="gcMsgWorld">
+						
+							<div class="gcMsgWorld1">
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!--
+                	作者：offline
+                	时间：2018-08-21
+                	描述：左边模块2
+                -->
+				<div class="left-xqIMG backImg">
+					<div class="Hear2 xqIMGHear"><span class="animated fadeInUp" style="display:block;"></span></div>
+					<div class="left-xqIMG-JD ">
+						<ul class="xqIMGUl">
+							<li><span class="chartName">基础</span>
+								<div id="chart1" class="char"></div>
+							</li>
+							<li><span class="chartName">组塔</span>
+								<div id="chart2" class="char"></div>
+							</li>
+							<li><span class="chartName">架线</span>
+								<div id="chart3" class="char"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--
+                	作者：offline
+                	时间：2018-08-21
+                	描述：左边模块3
+                -->
+				<div class="left-fx backImg">
+					<div class="Hear3"><span class="animated fadeInUp" style="display:block;">每周风险预警</span></div>
+					<div class="fxBox fxBoxLI">
+						<ul>
+							<li><span class="spanName">风险点</span> <span class="fxd">0</span> <span>个</span></li>
+							<li><span class="spanName">三级风险</span> <span class="sjfx">0</span><span>个</span> </li>
+							<li><span class="spanName">四级风险</span> <span class ="fjfx">0</span><span>个</span> </li>
+							<li><span class="spanName">风险跨越</span> <span class = "fxkyspan">0</span><span>个</span></li>
+						</ul>
+					</div>
+				</div>
+				<!--
+                	作者：offline
+                	时间：2018-08-21
+                	描述：左边模块4
+                -->
+				<div class="left-gzjl backImg">
+					<div class="Hear4" style="top:-5%;"><span class="animated fadeInUp" style="display:block;">今日工作记录</span></div>
+					<div class="gzjlBox">
+						<div class="gzjlLeft">
+							<table class="tabOne">
+								<tr>
+									<td>今日作业点(个)</td>
+									<td class="colorFFF">0</td>
+
+								</tr>
+								<tr>
+									<td>作业班组(个)</td>
+									<td class="colorFFF">0</td>
+
+								</tr>
+								<tr>
+
+									<td>作业人员(人)</td>
+									<td class="colorFFF">0</td>
+
+								</tr>
+								<tr>
+									<td>班组核心人员(人)</td>
+
+									<td class="colorFFF">0</td>
+								</tr>
+
+							</table>
+						</div>
+						<div class="line">
+
+						</div>
+						<div class="gzjlRight">
+							<table class="tabTWO" style="text-align: center;">
+								<tr>
+									<td class="colorye">站班(次)</td>
+									<td class="colorFFF">0</td>
+
+								</tr>
+								<tr>
+									<td class="colorye">交底(次)</td>
+									<td class="colorFFF">0</td>
+
+								</tr>
+								<tr>
+
+									<td class="colorye">跨越(次)</td>
+									<td class="colorFFF">0</td>
+
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!--
+                	作者：offline
+                	时间：2018-08-21
+                	描述：左边模块5
+                -->
+				<div class="left-sgfc">
+					<div class="sgfc-left ">
+						<div class="Hear7"><span class="animated fadeInUp" style="display:block;">施工风采</span></div>
+						<div class="sgfcMsgBox">
+							<div class="swiper-container" style="width: 100%;height: 100%;">
+								<div class="swiper-wrapper" style="width: 100%;height: 100%;">
+									<!--<div class="swiper-slide" style="width: 100%;height: 100%;">
+										<div class="sgfcImg">
+											<img src="img/img.png" />
+										</div>
+										<div class="sgfcMsg">
+											今日是好天气，适合出工，一辆辆黄色的车从地上开过，多么壮观!
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="sgfcImg">
+										<img src="img/img.png" />
+									</div>
+									<div class="sgfcMsg">
+										今日不是好天，适合出工，一辆辆黄色的车从地上开过，多么壮观!
+									</div>
+								</div>
+								<div class="swiper-slide">
+									<div class="sgfcImg">
+									<img src="img/img.png" />
+								</div>
+								<div class="sgfcMsg">
+									今日还可以，适合出工，一辆辆黄色的车从地上开过，多么壮观!
+								</div>
+							</div>-->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sgfc-right ">
+				<div class="Hear7 Hear7_1"><span class="animated fadeInUp" style="display:block;">履职履责</span></div>
+				<div class="ygdtBox" style="overflow: hidden;">
+					<ul class="ygdtUl" style="overflow: hidden;">
+						<li>
+							<div class="ygdtHer">
+								<div class="ygdtHerLeft" style="color: #ffbc27;">
+									【站班汇报】
+									
+								</div>
+								<div class="ygdtHerCenter" style="color: #ffbc27;">
+									陈赫
+								</div>
+								<div class="ygdtHerRight" style="color: #ffbc27;">
+									2018-08-23
+								</div>
+							</div>
+							<div class="ygdtMsg" style="color:#37b6e4;">
+								&nbsp;桩号：
+							</div>
+							<div class="">
+								&nbsp;地址市
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		</div>
+		<!-- 中间 -->
+		<div class="center">
+			<div class="centerHer">
+				<div class="centerTopworld">
+					智能大数据
+				</div>
+				<div class="centerDownworld">
+					统计分析平台
+				</div>
+			</div>
+			<div class="mapBox">
+				<div class="date">
+					<div class="mapName">
+						线路地图
+					</div>
+					<div class="mapdate" id="date">
+						0000-00-00
+					</div>
+				</div>
+
+				<div class="map">
+					<div id="mainMap" >
+					</div>
+				</div>
+			</div>
+			<div class="center-jd">
+				<div class="Hear8"><span class="animated fadeInUp" style="display:block;">进度总览</span></div>
+				<div class="dataList">
+					<div class="xbj">
+						
+					</div>
+					<div class="dataListBox">
+						<ul class="dataListUi">
+							<!--<li>
+
+								<div class="lineBOX">
+									<div class="BarGraph">
+										<div class="dataNum">
+											100%
+										</div>
+									</div>
+								</div>
+								<div class="dataNme">
+									辽东线
+								</div>
+							</li>-->
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- 右侧 -->
+		<div class="right">
+			<div class="right-fxky">
+				<div class="Hear"><span class="animated fadeInUp" style="display:block;">本周风险预警</span></div>
+				<div class="fxkyLeft fxkyli">
+					<ul>
+						<li style="color:#fff;"><span class="fxspan">风险点</span> <span class="bzfxd">0</span> <span>个</span></li>
+						<li><span class="fxspan" >四级风险</span> <span class="bzsjfx">0</span> <span>个</span></li>
+						<li><span class="fxspan" >三级风险</span> <span class="bzThreeFx">0</span> <span>个</span></li>
+						<li style="color:#f3af02;"><span class="fxspan" >风险跨越</span> <span class="bzfxky">0</span> <span>个</span></li>
+						<li style="color:#f3af02;"><span class="fxspan">未完成</span> <span class="bzwwc">0</span> <span>个</span></li>
+						<li style="color:#f3af02;"><span class="fxspan">已完成</span> <span class="bzywc">0</span> <span>个</span></li>
+					</ul>
+				</div>
+				<div class="fxkyRight ">
+					<div class="prebackImg">
+						 <img src="img/81540664582735283.png"/>
+					</div>
+					<div class="animate wave ">
+						<div class="w1"></div>
+						<div class="w2"></div>
+						<div class="w3"></div>
+						<div class="w4"></div>
+					</div>
+					<div id="main" class="pieLine1" style="position: absolute;top:2%;left: 13.7%;"></div>
+
+				</div>
+			</div>
+			<div class="right-aqgl">
+				<div class="Hear"><span class="animated fadeInUp" style="display:block;">本月安全管理</span></div>
+
+				<div class="fxkyLeft aqgl">
+					<ul>
+						<li><span class="fxspan" >安全检查</span> <span style="color:white;" class="aqjc">0</span> <span style="color:white;">次</span></li>
+						<li><span class="fxspan" >通过</span> <span style="color:#4194fc;" class="aqtg">0</span> <span style="color:#4194fc;">次</span></li>
+						<li><span class="fxspan">已整改</span> <span style="color:#0eca80;" class="aqyzg">0</span> <span style="color:#0eca80;">次</span ></li>
+							<li><span class="fxspan">未整改</span> <span style="color:#c43333;" class="aqwzg">0</span> <span style="color:#c43333;">次</span ></li>
+							<li><span class="fxspan" >警告</span> <span style="color:#ffff43;" class="aqjg">0</span> <span style="color:#ffff43;">次</span ></li>
+							
+						</ul>
+					</div>
+
+					<div class="fxkyRight">
+						<div id="lineRightOne" class="pieLine"></div>
+						<div class="lineSM">
+							 <div class="TJher">月统计</div>
+							 <ul>
+							 	<li><span class="TJline"></span> <span class="tjName">通过</span></li>
+						<li><span class="TJline1 TJline"></span> <span class="tjName1 tjName">已整改</span></li>
+						<li><span class="TJline2 TJline"></span> <span class="tjName2 tjName">未整改</span></li>
+						<li><span class="TJline3 TJline"></span> <span class="tjName3 tjName">警告</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="right-zlgl">
+			<div class="Hear"><span class="animated fadeInUp" style="display:block;">本月质量管理</span></div>
+			<div class="fxkyLeft aqgl">
+				<ul>
+					<li><span class="fxspan" >质量检查</span> <span style="color:white;" class="zljc">0</span> <span style="color:white;">次</span></li>
+					<li><span class="fxspan" >通过</span> <span style="color:#4194fc;" class="zltg">0</span> <span style="color:#4194fc;">次</span></li>
+					<li><span class="fxspan">已整改</span> <span style="color:#0eca80;" class="zlyzg">0</span> <span style="color:#0eca80;">次</span ></li>
+							<li><span class="fxspan">未整改</span> <span style="color:#c43333;" class="zlwzg">0</span> <span style="color:#c43333;">次</span ></li>
+							<li><span class="fxspan" >警告</span> <span style="color:#ffff43;" class="zljg">0</span> <span style="color:#ffff43;">次</span ></li>
+						</ul>
+					</div>
+
+					<div class="fxkyRight">
+						<div id="lineRightTwo" class="pieLine"></div>
+						<div class="lineSM">
+							 <div class="TJher">月统计</div>
+							 <ul>
+							 	<li><span class="TJline"></span> <span class="tjName">通过</span></li>
+					<li><span class="TJline1 TJline"></span> <span class="tjName1 tjName">已整改</span></li>
+					<li><span class="TJline2 TJline"></span> <span class="tjName2 tjName">未整改</span></li>
+					<li><span class="TJline3 TJline"></span> <span class="tjName3 tjName">警告</span></li>
+				</ul>
+			</div>
+		</div>
+		</div>
+		<div class="right-gsgl">
+			<div class="Hear"><span class="animated fadeInUp" style="display:block;">工程概览</span></div>
+			<div class="fxBox" style="height: 30%;">
+				<ul>
+					<li><span class="spanName">在建</span> <span class="Building" style="color:#fff;">9</span> <span style="color:#fff;">个</span></li>
+					<li><span class="spanName">竣工</span> <span class="Finish" style="color:#0dc27b;">22</span><span style="color:#0dc27b;">个</span> </li>
+					<li><span class="spanName">投运</span> <span class="Finish" style="color:#f1ba0a;">22</span><span style="color:#f1ba0a;">个</span></li>
+				</ul>
+			</div>
+			<div class="personnel">
+				<div class="personnelName">
+					<ul>
+						<li class="preLIone" style="text-align: left; text-indent: 2.5%;">部门</li>
+						<li class="preLITow">人员</li>
+						<li class="preLIThree">总人数</li>
+					</ul>
+				</div>
+				<div class="gscy personnelName">
+					<ul>
+						<li class="preLIone" style="text-align: left; text-indent: 2.5%;">作业班组</li>
+						<li class="preLITow zyba" style="color: #fff;">
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+						</li>
+						<li class="preLIThree" style="color:#fff">6</li>
+					</ul>
+				</div>
+				<div class="gxbz personnelName">
+					<ul>
+						<li class="preLIone" style="text-align: left; text-indent: 2.5%;">班组骨干</li>
+						<li class="preLITow hxNUm" style="color: #fff;">
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+						</li>
+						<li class="preLIThree" style="color:#fff">22</li>
+					</ul>
+				</div>
+				<div class="sgry personnelName">
+					<ul>
+						<li class="preLIone" style="text-align: left; text-indent: 2.5%;">核心分包</li>
+						<li class="preLITow sgnUM" style="color: #fff;">
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+							<i class="iconfont icon-renyuanzongliang"></i>
+						</li>
+						<li class="preLIThree" style="color:#fff">50</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		<div class="videoBox" style="display:none;">
+		  
+		  <div class="video">
+		  	<div class="off">×</div>
+		  	 <iframe  id="iframeVideo" src="" width="100%" height="100%"></iframe>
+		  </div>
+		</div>
+	</body>
+
+</html>

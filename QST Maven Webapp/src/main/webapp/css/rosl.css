@@ -1,0 +1,363 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+[v-cloak] {
+	display: none
+}
+body,
+html {
+	width: 100%;
+	height: 100%;
+}
+.el-form-item__label:before{
+	      content: '* ';
+				color: #ff1818;
+}
+a {
+	text-decoration: none;
+}
+
+ .table {
+    border-collapse: collapse !important;
+	width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  }
+  .table thead tr{
+	   /* border-bottom:1px solid #efefef ; */
+	   height: 0px;
+  }
+  .form-control {
+  display: block;
+  width: 50%;
+  height: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.table tbody tr{
+	height: 50px;
+	border-bottom:1px solid #efefef ;
+	color: #999;
+}
+#line{
+	width: 0px;
+	border: 2px solid #007AFF;
+	height: 100%;
+	float: left;
+	position: absolute;
+	left: 11%;
+	overflow: hidden;
+	cursor: w-resize;
+	z-index: 999;
+}
+.roleCodeMb {
+  
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+}
+.organCode{
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+}
+.table button{
+	 padding: 5px 8px !important;
+}
+.el-card__body {
+	height: 100%;
+	padding-top: 0px !important;
+
+}
+
+.rolelist {
+	width: 100%;
+	height: 80%;
+	overflow: auto;
+   
+}
+
+.roleBox {
+	width: 50%;
+	height: 50%;
+	overflow: auto;
+	position: absolute;
+	left: 25%;
+	top: 25%;
+	background: #ffff;
+	
+}
+
+.roleOff {
+	width: 30px;
+	position: absolute;
+	top: 24%;
+	left: 77%;
+	cursor: pointer;
+}
+.organOff {
+	width: 30px;
+	position: absolute;
+	top: 24%;
+	left: 77%;
+	cursor: pointer;
+}
+.roleOff img {
+	width: 100%;
+}
+.organOff img{
+	width: 100%;
+}
+
+.BoxNav {
+	float: left;
+	position: absolute;
+	left: 375px;
+}
+
+.fileinput-button {
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+}
+
+.fileinput-button input {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	opacity: 0;
+	-ms-filter: 'alpha(opacity=0)';
+	font-size: 200px;
+}
+
+.TopNav {
+	width: 100%;
+	height: 7%;
+	background: #057cfc;
+	overflow: hidden;
+	min-height: 50px;
+	position: relative;
+}
+
+.logo {
+	float: left;
+	padding-left: 50px;
+	overflow: hidden;
+	height: 50px;
+	position: absolute;
+	top: 50%;
+	margin-top: -25px;
+}
+
+.logo img {
+	width: 50px;
+	float: left;
+}
+
+.logo span {
+	float: left;
+	font-size: 20px;
+	font-weight: 600;
+	color: white;
+	padding: 4% 0;
+
+}
+
+.TopNavLeft {
+	float: right;
+	margin-top: 1.2%;
+}
+
+.TopNavLeft img {
+	width: 20px;
+	float: left;
+	padding-right: 10px;
+}
+
+.TopNavLeft span {
+	float: left;
+	color: white;
+	font-size: 14px;
+}
+
+.uers {
+	float: left;
+	padding-right: 10px;
+}
+
+.time {
+	float: left;
+}
+
+.end {
+	float: left;
+	margin-left: 30px;
+	margin-right: 20px;
+	cursor: pointer;
+}
+
+.leftMain {
+	float: left;
+	width: 11%;
+	height: 100%;
+	/* border-right: 4px solid #057CFC; */
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.el-submenu__title{
+	/* padding: 0 !important;
+	margin-left: 40px !important; */
+	margin-right: 20px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	
+}
+.main {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.tableRight{
+	 width: 100%;
+	 padding: 10px 0;
+	 padding-right: 30px;
+	 border-bottom:1px solid #efefef;
+	 overflow: hidden;
+}
+.tbaleGN{
+	float: right;
+	margin-right: 18px !important;
+}
+.rightMain {
+	float: left;
+	width: 89%;
+	height: 100%;
+
+}
+.box{
+	 width: 95%;
+	 height: 100%;
+	 float: right;
+	
+}
+.nav{
+	width: 64px;
+	height: 100%;
+	float: left;
+	background: #eee;
+
+}
+#leftNav {
+	padding-top: 10px;
+	padding-left: 20px;
+}
+
+.rightCZ {
+	/* overflow: hidden; */
+	margin-top: 20px;
+}
+
+.CZleft {
+	float: right;
+	margin-right: 20px;
+}
+
+.CZRight {
+	float: left;
+	padding-left: 20px;
+}
+
+.formBox {
+	width: 500px;
+	height: 400px;
+	overflow: auto;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -250px;
+	margin-top: -200px;
+	background: white;
+	padding: 20px;
+	padding-top: 50px;
+	z-index: 999;
+	border: 1px solid #eee;
+	box-shadow: 4px 4px 8px #eee;
+	display: none;
+}
+.tjbox{
+	  position: fixed;
+    top: 26%;
+    right: 28%;
+}
+.formBoxNew {
+	width: 50%;
+	height: 50%;
+	overflow: auto;
+	position: absolute;
+	top: 25%;
+	left: 25%;
+	background: white;
+	padding: 20px;
+	padding-top: 50px;
+	z-index: 999;
+	border: 1px solid #eee;
+	border-radius:5px;
+	/* display: none; */
+}
+
+.off {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	color: #999;
+	cursor: pointer;
+}
+
+.rightCZ {
+	width: 100%;
+	height: 6%;
+	min-height: 50px;
+}
+
+.boxTable {
+	width: 100%;
+	height: 75%;
+	overflow: auto;
+}
+
+.pag {
+	width: 100%;
+	height: 6%;
+	min-height: 50px;
+	background: #fff;
+	padding: 1%;
+}
+
+.pagfx {
+	float: right;
+	padding-right: 10%;
+}

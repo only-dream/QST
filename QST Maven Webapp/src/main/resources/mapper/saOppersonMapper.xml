@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Ernest.Dao.saOppersonDaoI">
+	<resultMap type="Ernest.Entity.SaOpperson" id="SaOppersonMap">
+		<id column="sid" jdbcType="VARCHAR" property="sid"/>
+		<result column="sname" jdbcType="VARCHAR" property="sname" />
+		<result column="sidcard" jdbcType="VARCHAR" property="sidcard" />
+		<result column="sSex" jdbcType="VARCHAR" property="ssex" />
+		<result column="sage" jdbcType="INTEGER" property="sage" />
+		<result column="sloginName" jdbcType="VARCHAR" property="sloginName" />
+		<result column="spassword" jdbcType="VARCHAR" property="spassword" />
+		<result column="loginCount" jdbcType="SMALLINT" property="loginCount" />
+		<result column="smd5str" jdbcType="VARCHAR" property="smd5str" />
+		<result column="smainOrgId" jdbcType="VARCHAR" property="smainOrgId" />
+		<result column="sdeptId" jdbcType="VARCHAR" property="sdeptId" />
+		<result column="schineseFirstPy" jdbcType="VARCHAR" property="schineseFirstPy" />
+		<result column="sorgKindId" jdbcType="VARCHAR" property="sorgKindId" />
+		<result column="fimage" jdbcType="VARCHAR" property="fimage" />
+		<result column="sjoinDate" jdbcType="TIMESTAMP" property="sjoinDate" />
+		<result column="orgId" jdbcType="VARCHAR" property="orgId" />
+		<collection  property="saOporg"  ofType="Ernest.Entity.SaOporg">
+			<id column="so_id" jdbcType="VARCHAR" property="sid"/>
+			<result column="snodeKind" jdbcType="VARCHAR" property="snodeKind" />
+			<result column="screateTime" jdbcType="TIMESTAMP" property="screateTime" />
+			<result column="sparentId" jdbcType="VARCHAR" property="sparentId" />
+		</collection>
+	</resultMap>
+	
+	
+	<resultMap type="Ernest.Entity.SaOpperson" id="onlySaOppersonMap">
+		<id column="sid" jdbcType="VARCHAR" property="sid"/>
+		<result column="sname" jdbcType="VARCHAR" property="sname" />
+		<result column="sidcard" jdbcType="VARCHAR" property="sidcard" />
+		<result column="sage" jdbcType="INTEGER" property="sage" />
+		<result column="sloginName" jdbcType="VARCHAR" property="sloginName" />
+		<result column="spassword" jdbcType="VARCHAR" property="spassword" />
+		<result column="smd5str" jdbcType="VARCHAR" property="smd5str" />
+		<result column="smainOrgId" jdbcType="VARCHAR" property="smainOrgId" />
+		<result column="sworkType" jdbcType="VARCHAR" property="sworkType" />
+		<result column="shealthStatus" jdbcType="VARCHAR" property="shealthStatus" />
+		<result column="ssex" jdbcType="VARCHAR" property="ssex" />
+		<result column="sexamScore" jdbcType="REAL" property="sexamScore" />
+		<result column="sfamilyAddress" jdbcType="VARCHAR" property="sfamilyAddress" />
+		<result column="smobilePhone" jdbcType="VARCHAR" property="smobilePhone" />
+		<result column="sdeptId" jdbcType="VARCHAR" property="sdeptId" />
+		<result column="schineseFirstPy" jdbcType="VARCHAR" property="schineseFirstPy" />
+		<result column="sorgKindId" jdbcType="VARCHAR" property="sorgKindId" />
+		<result column="fimage" jdbcType="VARCHAR" property="fimage" />
+		<result column="sjoinDate" jdbcType="TIMESTAMP" property="sjoinDate" />
+		<result column="orgId" jdbcType="VARCHAR" property="orgId" />
+	</resultMap>
+	
+	<select id="Login"   resultMap="SaOppersonMap">
+		select 
+			sa.sID as sid,
+			sa.sName as sname,
+			sa.sSex as ssex,
+			sa.sIDCard as sidcard,
+			sa.sLoginName as sloginName,
+			sa.sPassword as spassword,
+			sa.loginCount as loginCount,
+			sa.sMd5Str as smd5str,
+			sa.sMainOrgID as smainOrgId,
+			sa.sDeptID as sdeptId,
+			sa.sChineseFirstPY as schineseFirstPy,
+			sa.sOrgKindID as sorgKindId,
+			sa.fImage as fimage,
+			sa.sJoinDate as sjoinDate,
+			so.sCreateTime as screateTime,
+			so.sParentID as sparentId,
+			so.sNodeKind as snodeKind,
+			sa.orgId as orgId 
+		from sa_opperson sa,sa_oporg so where  (so.sID=sa.sID or sa.sID=so.sParentID2)  
+		and sa.sLoginName=#{0} and sa.sPassword=#{1} order by sNodeKind 
+		
+	</select>
+	
+	<insert id="save" parameterType="Ernest.Entity.SaOpperson">
+		insert into sa_opperson 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="sname != null">
+				sname,
+			</if>
+			<if test="sidcard != null">
+				sidcard,
+			</if>
+			<if test="sage != null">
+				sage,
+			</if>
+			<if test="sloginName != null">
+				sloginName,
+			</if>
+			<if test="spassword != null">
+				spassword,
+			</if>
+			<if test="smd5str != null">
+				smd5str,
+			</if>
+			<if test="smainOrgId != null">
+				smainOrgId,
+			</if>
+			<if test="sworkType != null">
+				sworkType,
+			</if>
+			<if test="shealthStatus != null">
+				shealthStatus,
+			</if>
+			<if test="ssex != null">
+				ssex,
+			</if>
+			<if test="sexamScore != null">
+				sexamScore,
+			</if>
+			<if test="sfamilyAddress != null">
+				sfamilyAddress,
+			</if>
+			<if test="smobilePhone != null">
+				smobilePhone,
+			</if>
+			<if test="sdeptId != null">
+				sdeptId,
+			</if>
+			<if test="schineseFirstPy != null">
+				schineseFirstPy,
+			</if>
+			<if test="sorgKindId != null">
+				sorgKindId,
+			</if>
+			<if test="fimage != null">
+				fimage,
+			</if>
+			<if test="sjoinDate != null">
+				sjoinDate,
+			</if>
+			<if test="orgId != null">
+				orgId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=VARCHAR},
+			</if>
+			<if test="sname != null">
+				#{sname,jdbcType=VARCHAR},
+			</if>
+			<if test="sidcard != null">
+				#{sidcard,jdbcType=VARCHAR},
+			</if>
+			<if test="sage != null">
+				#{sage,jdbcType=INTEGER},
+			</if>
+			<if test="sloginName != null">
+				#{sloginName,jdbcType=VARCHAR},
+			</if>
+			<if test="spassword != null">
+				#{spassword,jdbcType=VARCHAR},
+			</if>
+			<if test="smd5str != null">
+				#{smd5str,jdbcType=VARCHAR},
+			</if>
+			<if test="smainOrgId != null">
+				#{smainOrgId,jdbcType=VARCHAR},
+			</if>
+			<if test="sworkType != null">
+				#{sworkType,jdbcType=VARCHAR},
+			</if>
+			<if test="shealthStatus != null">
+				#{shealthStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="ssex != null">
+				#{ssex,jdbcType=VARCHAR},
+			</if>
+			<if test="sexamScore != null">
+				#{sexamScore,jdbcType=REAL},
+			</if>
+			<if test="sfamilyAddress != null">
+				#{sfamilyAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="smobilePhone != null">
+				#{smobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="sdeptId != null">
+				#{sdeptId,jdbcType=VARCHAR},
+			</if>
+			<if test="schineseFirstPy != null">
+				#{schineseFirstPy,jdbcType=VARCHAR},
+			</if>
+			<if test="sorgKindId != null">
+				#{sorgKindId,jdbcType=VARCHAR},
+			</if>
+			<if test="fimage != null">
+				#{fimage,jdbcType=VARCHAR},
+			</if>
+			<if test="sjoinDate != null">
+				#{sjoinDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="Ernest.Entity.SaOpperson">
+		update  sa_opperson 
+			<trim prefix="set" suffixOverrides=",">
+				<if test="sname != null">
+					sname = #{sname,jdbcType=VARCHAR},
+				</if>
+				<if test="sidcard != null">
+					sidcard = #{sidcard,jdbcType=VARCHAR},
+				</if>
+				<if test="sage != null">
+					sage = #{sage,jdbcType=INTEGER},
+				</if>
+				<if test="sloginName != null">
+					sloginName = #{sloginName,jdbcType=VARCHAR},
+				</if>
+				<if test="spassword != null">
+					spassword = #{spassword,jdbcType=VARCHAR},
+				</if>
+				<if test="smd5str != null">
+					smd5str = #{smd5str,jdbcType=VARCHAR},
+				</if>
+				<if test="smainOrgId != null">
+					smainOrgId = #{smainOrgId,jdbcType=VARCHAR},
+				</if>
+				<if test="sworkType != null">
+					sworkType = #{sworkType,jdbcType=VARCHAR},
+				</if>
+				<if test="shealthStatus != null">
+					shealthStatus = #{shealthStatus,jdbcType=VARCHAR},
+				</if>
+				<if test="ssex != null">
+					ssex = #{ssex,jdbcType=VARCHAR},
+				</if>
+				<if test="sexamScore != null">
+					sexamScore = #{sexamScore,jdbcType=REAL},
+				</if>
+				<if test="sfamilyAddress != null">
+					sfamilyAddress = #{sfamilyAddress,jdbcType=VARCHAR},
+				</if>
+				<if test="smobilePhone != null">
+					smobilePhone = #{smobilePhone,jdbcType=VARCHAR},
+				</if>
+				<if test="sdeptId != null">
+					sdeptId = #{sdeptId,jdbcType=VARCHAR},
+				</if>
+				<if test="schineseFirstPy != null">
+					schineseFirstPy = #{schineseFirstPy,jdbcType=VARCHAR},
+				</if>
+				<if test="sorgKindId != null">
+					sorgKindId = #{sorgKindId,jdbcType=VARCHAR},
+				</if>
+				<if test="fimage != null">
+					fimage = #{fimage,jdbcType=VARCHAR},
+				</if>
+				<if test="sjoinDate != null">
+					sjoinDate = #{sjoinDate,jdbcType=TIMESTAMP},
+				</if>
+				<if test="orgId != null">
+					orgId = #{orgId,jdbcType=VARCHAR},
+				</if>
+			</trim>
+		where
+			 sid = #{sid,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="findPersonList" parameterType="String" resultMap="SaOppersonMap">
+		select 
+			sa.sID as sid,
+			sa.sSex as ssex,
+			sa.sName as sname,
+			sa.sIDCard as sidcard,
+			sa.sLoginName as sloginName,
+			sa.sPassword as spassword,
+			sa.loginCount as loginCount,
+			sa.sMd5Str as smd5str,
+			sa.sMainOrgID as smainOrgId,
+			sa.sDeptID as sdeptId,
+			sa.sChineseFirstPY as schineseFirstPy,
+			sa.sOrgKindID as sorgKindId,
+			sa.fImage as fimage,
+			sa.sJoinDate as sjoinDate,
+			so.sCreateTime as screateTime,
+			so.sParentID as sparentId,
+			so.sNodeKind as snodeKind,
+			sa.orgId as orgId 
+		from 
+			sa_opperson sa,sa_oporg so 
+		where 
+			(sa.sID=so.sID or sa.sID=so.sParentID2) and so.sParentID=#{id}
+	</select>
+	
+	<select id="likeFindPersonList"  resultMap="SaOppersonMap">
+		select 
+			sa.sID as sid,
+			sa.sSex as ssex,
+			sa.sName as sname,
+			sa.sIDCard as sidcard,
+			sa.sLoginName as sloginName,
+			sa.sPassword as spassword,
+			sa.loginCount as loginCount,
+			sa.sMd5Str as smd5str,
+			sa.sMainOrgID as smainOrgId,
+			sa.sDeptID as sdeptId,
+			sa.sChineseFirstPY as schineseFirstPy,
+			sa.sOrgKindID as sorgKindId,
+			sa.fImage as fimage,
+			sa.sJoinDate as sjoinDate,
+			so.sCreateTime as screateTime,
+			so.sParentID as sparentId,
+			so.sNodeKind as snodeKind,
+			sa.orgId as orgId 
+		from 
+			sa_opperson sa,sa_oporg so 
+		where 
+			 (sa.sID=so.sID or sa.sID=so.sParentID2) and sa.sMd5Str = #{0} and sDeptID=#{1} and (sa.sName  LIKE CONCAT('%',#{2},'%') or sa.sLoginName like CONCAT('%',#{2},'%'))
+	</select>
+</mapper>

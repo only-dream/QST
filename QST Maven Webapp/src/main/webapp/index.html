@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>千顺通后台人员管理系统</title>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element.js"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+
+	</head>
+	<body>
+		<div class="TopNav" id="topNav">
+			<div class="logo">
+				<img src="img/448026568857426546.png">
+				<span>千顺通后台人员管理系统</span>
+			</div>
+			<div class="TopNavLeft">
+				<div class="uers">
+					<img src="img/用户.png">
+					<span>{{uresName}}</span>
+				</div>
+				<div class="time">
+					<img src="img/时间.png">
+					<span>{{time}}</span>
+				</div>
+				<div class="end" @click="exit">
+					<img src="img/退出.png">
+				</div>
+			</div>
+		</div>
+		<div class="main" id="tabletow">
+			<div class="nav">
+				<el-menu :default-active="table" class="el-menu-vertical-demo" :collapse="false" 
+				 @select="SelectNav" background-color = "#f6f6f6" >
+					<el-menu-item index="rosl.html,人员管理">
+						<i class="iconfont icon-renyuanzuguanli" ></i>
+						<span slot="title" style="font-size: 12px;">人员管理</span>
+					</el-menu-item>
+					<el-menu-item index="project.html,项目组织">
+						<i class="iconfont icon-project" ></i>
+						<span slot="title" style="font-size: 12px;">项目组织</span>
+					</el-menu-item>
+					<el-menu-item index="projectManagement.html,项目管理">
+						<i class="iconfont icon-xiangmushenbao" ></i>
+						<span slot="title" style="font-size: 12px;">项目管理</span>
+					</el-menu-item>
+					<el-menu-item index="Album.html,照片管理">
+						<i class="iconfont icon-tupian" ></i>
+						<span slot="title" style="font-size: 12px;">照片管理</span>
+					</el-menu-item>
+					<el-menu-item index="authorization.html,授权管理">
+						<i class="iconfont icon-shouquan" ></i>
+						<span slot="title" style="font-size: 12px;">授权管理</span>
+					</el-menu-item>
+					<el-menu-item index="SignIn.html,签到管理">
+						<i class="iconfont icon-qiandao" ></i>
+						<span slot="title" style="font-size: 12px;">签到管理</span>
+					</el-menu-item>
+					<el-menu-item index="BzbPC/index.html">
+						<i class="iconfont icon-luopancompass83" ></i>
+						<span slot="title" style="font-size: 12px;">工程罗盘</span>
+					</el-menu-item>
+				</el-menu>
+
+			</div>
+			<div class="box">
+				<el-tabs v-model="editableTabsValue2" type="card" closable @tab-remove="removeTab" @tab-click="positionTab" style="height: 100%">
+					<el-tab-pane v-for="(item, index) in editableTabs2" :key="item.name" :label="item.title" :name="item.name" style="height: 100%">
+						<iframe :src="item.content" scrolling="no"  width="100%" height="100%" id="iframe"></iframe>
+					</el-tab-pane>
+				</el-tabs>
+			</div>
+		</div>
+		</div>
+	</body>
+
+</html>

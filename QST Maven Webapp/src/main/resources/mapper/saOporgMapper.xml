@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Ernest.Dao.saOporgDaoI">
+	<resultMap type="Ernest.Entity.SaOporg" id="SaOporgMap">
+		<id column="sID" jdbcType="VARCHAR" property="sid"/>
+		<result column="sParentID" jdbcType="VARCHAR" property="sparentId" />
+		<result column="sName" jdbcType="VARCHAR" property="sname" />
+		<result column="sFName" jdbcType="VARCHAR" property="sfname" />
+		<result column="sMd5Str" jdbcType="VARCHAR" property="smd5str" />
+		<result column="sOrgKindID" jdbcType="VARCHAR" property="sorgKindId" />
+		<result column="sNodeKind" jdbcType="VARCHAR" property="snodeKind" />
+		<result column="sMd5Str2" jdbcType="VARCHAR" property="smd5str2" />
+		<result column="sPhone" jdbcType="VARCHAR" property="sphone" />
+		<result column="fImage" jdbcType="VARCHAR" property="fimage" />
+	</resultMap>
+	
+	<select id="findAdmin"   resultMap="SaOporgMap">
+		select 
+			sID ,
+			sFName,
+			sName,
+			sMd5Str,
+			sOrgKindID,
+			sNodeKind,
+			sMd5Str2,
+			sPhone,
+			sParentID ,
+			fImage  
+		from 
+			sa_oporg 
+		where 
+			sMd5Str=#{0} and sNodeKind=#{1} and sMd5Str2 is null
+	</select>
+	<select id="getAllDepartment"   resultMap="SaOporgMap">
+		select 
+			sID ,
+			sFName,
+			sName,
+			sMd5Str,
+			sOrgKindID,
+			sNodeKind,
+			sMd5Str2,
+			sPhone,
+			sParentID ,
+			fImage  
+		from 
+			sa_oporg 
+		where 
+			sMd5Str=#{0} and sNodeKind=#{1} 
+	</select>
+	
+	<insert id="save" parameterType="Ernest.Entity.SaOporg">
+		insert into sa_oporg 
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="sid != null">
+			sID,
+		</if>  
+		<if test="sname != null">
+			sName,
+		</if>  
+		<if test="sfname != null">
+			sFName,
+		</if>  
+		<if test="smd5str != null">
+			sMd5Str,
+		</if>  
+		<if test="sorgKindId != null">
+			sOrgKindID,
+		</if>  
+		<if test="snodeKind != null">
+			sNodeKind,
+		</if>  
+		<if test="smd5str2 != null">
+			sMd5Str2,
+		</if>  
+		<if test="sphone != null">
+			sPhone,
+		</if>  
+		<if test="sparentId != null">
+			sParentID,
+		</if>  
+		<if test="fimage != null">
+			fImage
+		</if>  
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="sid != null">
+          #{sid,jdbcType=VARCHAR},
+         </if>	
+         <if test="sname != null">
+          #{sname,jdbcType=VARCHAR},
+         </if>	
+         <if test="sfname != null">
+          #{sfname,jdbcType=VARCHAR},
+         </if>	
+         <if test="smd5str != null">
+          #{smd5str,jdbcType=VARCHAR},
+         </if>	
+         <if test="sorgKindId != null">
+          #{sorgKindId,jdbcType=VARCHAR},
+         </if>	
+         <if test="snodeKind != null">
+          #{snodeKind,jdbcType=VARCHAR},
+         </if>	
+         <if test="smd5str2 != null">
+          #{smd5str2,jdbcType=VARCHAR},
+         </if>	
+         <if test="sphone != null">
+          #{sphone,jdbcType=VARCHAR},
+         </if>	
+         <if test="sparentId != null">
+          #{sparentId,jdbcType=VARCHAR},
+         </if>	
+         <if test="fimage != null">
+          #{fimage,jdbcType=VARCHAR}
+         </if>	
+		</trim>
+	</insert>
+	
+	<update id="updateById" parameterType="Ernest.Entity.SaOporg">
+		update sa_oporg 
+			<trim prefix="set" suffixOverrides=",">
+				<if test="sname != null">
+					sname = #{sname,jdbcType=VARCHAR},
+				</if>	
+	         	<if test="sfname != null">
+					sfname = #{sfname,jdbcType=VARCHAR},
+				</if>	
+	         	<if test="smd5str != null">
+					smd5str = #{smd5str,jdbcType=VARCHAR},
+				</if>	
+	         	<if test="sorgKindId != null">
+					sorgKindId = #{sorgKindId,jdbcType=VARCHAR},
+				</if>	
+	         	<if test="snodeKind != null">
+					snodeKind = #{snodeKind,jdbcType=VARCHAR},
+				</if>	
+	         	<if test="smd5str2 != null">
+					smd5str2 = #{smd5str2,jdbcType=VARCHAR},
+				</if>	
+	         	<if test="sphone != null">
+					sphone = #{sphone,jdbcType=VARCHAR},
+				</if>	
+	         	<if test="sparentId != null">
+					sparentId = #{sparentId,jdbcType=VARCHAR},
+				</if>	
+	         	<if test="fimage != null">
+					fimage = #{fimage,jdbcType=VARCHAR},
+				</if>	
+			</trim>
+			where  
+				sid = #{sid,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="findByMd5" parameterType="String" resultType="Ernest.Entity.SaOporg">
+	
+		select 
+			sID,
+			sFName ,
+			sNodeKind,
+			sParentID,
+			sMd5Str 
+		from sa_oporg 
+		where 
+			sMd5Str=#{md5}
+	</select>
+</mapper>

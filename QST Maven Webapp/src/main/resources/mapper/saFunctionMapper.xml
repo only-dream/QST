@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Ernest.Dao.saFunctionDaoI">
+	<resultMap type="Ernest.Entity.SaFunction" id="saFunctionMap">
+		<id column="sid" jdbcType="VARCHAR" property="sid"/>
+		<result column="sname" jdbcType="VARCHAR" property="sname"/>
+		<result column="surl" jdbcType="VARCHAR" property="surl"/>
+		<result column="isShow" jdbcType="SMALLINT" property="isShow"/>
+		<result column="roleId" jdbcType="VARCHAR" property="roleId"/>
+		<result column="sicon" jdbcType="VARCHAR" property="sicon"/>
+		<result column="companyId" jdbcType="VARCHAR" property="companyId"/>
+		<result column="sorder" jdbcType="INTEGER" property="sorder"/>
+		<result column="stype" jdbcType="VARCHAR" property="stype"/>
+	</resultMap>
+	
+	<select id="">
+	
+	</select>
+	
+	<insert id="save" parameterType="Ernest.Entity.SaFunction">
+		insert into sa_function 
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="sid != null">
+					 sid,
+				</if>
+				<if test="sname != null">
+					 sname,
+				</if>
+				<if test="surl != null">
+					 surl,
+				</if>
+				<if test="isShow != null">
+					 isShow,
+				</if>
+				<if test="roleId != null">
+					 roleId,
+				</if>
+				<if test="sicon != null">
+					 sicon,
+				</if>
+				<if test="companyId != null">
+					 companyId,
+				</if>
+				<if test="sorder != null">
+					 sorder,
+				</if>
+				<if test="stype != null">
+					 stype,
+				</if>
+			</trim>
+			<trim prefix=" values (" suffix=")" suffixOverrides=",">
+				<if test="sid != null">
+					 #{sid,jdbcType=VARCHAR},
+				</if>
+				<if test="sname != null">
+					#{sname,jdbcType=VARCHAR},
+				</if>
+				<if test="surl != null">
+					 #{surl,jdbcType=VARCHAR},
+				</if>
+				<if test="isShow != null">
+					#{isShow,jdbcType=SMALLINT},
+				</if>
+				<if test="roleId != null">
+					 #{roleId,jdbcType=VARCHAR},
+				</if>
+				<if test="sicon != null">
+					 #{sicon,jdbcType=VARCHAR},
+				</if>
+				<if test="companyId != null">
+					 #{companyId,jdbcType=VARCHAR},
+				</if>
+				<if test="sorder != null">
+					#{sorder,jdbcType=INTEGER},
+				</if>
+				<if test="stype != null">
+					 #{stype,jdbcType=VARCHAR},
+				</if>
+			</trim>
+	</insert>
+	
+	<update id="updateById" parameterType="Ernest.Entity.SaFunction">
+		update sa_function 
+			<trim prefix="set" suffixOverrides=",">
+				
+				<if test="sname != null">
+					 sname=#{sname,jdbcType=VARCHAR},
+				</if>
+				<if test="surl != null">
+					 surl=#{surl,jdbcType=VARCHAR},
+				</if>
+				<if test="isShow != null">
+					 isShow=#{isShow,jdbcType=SMALLINT},
+				</if>
+				<if test="roleId != null">
+					 roleId=#{roleId,jdbcType=VARCHAR},
+				</if>
+				<if test="sicon != null">
+					 sicon=#{sicon,jdbcType=VARCHAR},
+				</if>
+				<if test="companyId != null">
+					 companyId=#{companyId,jdbcType=VARCHAR},
+				</if>
+				<if test="sorder != null">
+					 sorder=#{sorder,jdbcType=INTEGER},
+				</if>
+				<if test="stype != null">
+					 stype=#{stype,jdbcType=VARCHAR},
+				</if>
+			</trim>
+		where 
+			sid=#{sid,jdbcType=VARCHAR},
+	</update>
+	
+	
+	
+</mapper>

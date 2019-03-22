@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Ernest.Dao.saOppersonOproleDaoI">
+	<resultMap type="Ernest.Entity.SaOppersonOprole" id="saOppersonOproleMap">
+		<id column="sid" jdbcType="VARCHAR" property="sid"/>
+		<result column="userId" jdbcType="VARCHAR" property="userId"/>
+		<result column="roleId" jdbcType="VARCHAR" property="roleId"/>
+		<result column="smd5str" jdbcType="VARCHAR" property="smd5str"/>
+		
+	</resultMap>
+	
+	
+	
+	<select id="findById" parameterType="String" resultMap="saOppersonOproleMap">
+		select sid,userId,roleId,smd5str from sa_opperson_oprole 
+		where sid = #{id,jdbcType=VARCHAR}
+	</select> 
+	
+	<insert id="save" parameterType="Ernest.Entity.SaOppersonOprole">
+		insert into sa_opperson_oprole 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid !=null">
+				sid,
+			</if>
+			<if test="userId !=null">
+				userId,
+			</if>
+			<if test="roleId !=null">
+				roleId,
+			</if>
+			<if test="smd5str !=null">
+				smd5str,
+			</if>
+			
+		</trim>
+		<trim prefix="value(" suffix=")" suffixOverrides=",">
+			<if test="sid !=null">
+				#{sid,jdbcType=VARCHAR},
+			</if>
+			<if test="userId !=null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="roleId !=null">
+				#{roleId,jdbcType=VARCHAR},
+			</if>
+			<if test="smd5str !=null">
+				#{smd5str,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateById" parameterType="Ernest.Entity.SaOppersonOprole">
+		update sa_opperson_oprole 
+			<trim prefix="set" suffixOverrides=",">
+				<if test="userId !=null">
+					userId=#{userId,jdbcType=VARCHAR},
+				</if>
+				<if test="roleId !=null">
+					roleId=#{roleId,jdbcType=VARCHAR},
+				</if>
+				<if test="smd5str !=null">
+					smd5str=#{smd5str,jdbcType=VARCHAR},
+				</if>
+			</trim>
+		where 
+			sid=#{sid,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deletById" parameterType="String">
+		DELETE FROM sa_opperson_oprole WHERE sid=#{id,jdbcType=VARCHAR}
+	</delete>
+	
+	
+</mapper>
